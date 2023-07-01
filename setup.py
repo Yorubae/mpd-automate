@@ -8,7 +8,7 @@ def isConfig(path):
     return False
 
 cwdpath = os.getcwd()
-track_path = os.path.join(cwd, 'tracks')
+track_path = os.path.join(cwdpath, 'tracks')
 
 path = input("Enter the path of your music directory: ")
 cl_id = input("Enter your spotify client id: ")
