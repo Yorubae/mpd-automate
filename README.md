@@ -49,7 +49,7 @@ MPD Automate is licensed under the [MIT License](https://opensource.org/licenses
 
 ## Contributing
 
-Contributions to MPD Automate are welcome! If you would like to contribute to this project, please follow the guidelines outlined in the [CONTRIBUTING.md](https://github.com/Yorubae/mpd-automate/CONTRIBUTING.md) file.
+Contributions to MPD Automate are welcome! If you would like to contribute to this project, please follow the guidelines outlined in the [CONTRIBUTING.md](https://github.com/Yorubae/mpd-automate/blob/main/CONTRIBUTING.md) file.
 
 ## Acknowledgments
 
