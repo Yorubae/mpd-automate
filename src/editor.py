@@ -37,4 +37,7 @@ def edit_meta(title=None, album=None, Artist=None, Path=Path):
         files.append(file)
         track_title = file.split("/")[-1].split(".")[0]
         trackName, artist = _get_title_(track_title)
-        _add_metadata(file, trackName, artist)
+        # _add_metadata(file, trackName, artist)
+
+if __name__ == "__main__":
+    pass
