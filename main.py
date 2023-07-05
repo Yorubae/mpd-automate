@@ -1,18 +1,17 @@
-from src.editor import edit_meta
+from src.editor import _add_metadata, _get_title_
 from src.downloadtrack import search_videos
 from src.downloadtrack import download_song
 import os, sys
 from config import Path, TempPath
 import shutil
 from pydub import AudioSegment
-
-music_PATH = Path
+from src import albumart
 
 
 def _moveTomusic_():
     for file in os.listdir(TempPath):
         srcpath = os.path.join(TempPath, file)
-        dstpath = os.path.join(music_PATH, file)
+        dstpath = os.path.join(Path, file)
         with open(srcpath, "rb") as f:
             audio = AudioSegment.from_file(f)
         audio.export(dstpath + ".mp3", format="mp3")
@@ -21,7 +20,7 @@ def _moveTomusic_():
 
 
 def check_aud_exists(title):
-    for file in os.listdir(music_PATH):
+    for file in os.listdir(Path):
         if title.lower() in file.lower():
             return True
 
@@ -50,14 +49,20 @@ def event(option):
             _moveTomusic_()
             print("Audio conversion done!")
             print("Getting it's metadata from spotify servers....")
-            edit_meta()
+            spotitle, artist, url = _get_title_(title)
+            _add_metadata(os.path.join(Path, title + ".mp3"), spotitle, artist)
             print("Song added to library")
     elif option == 2:
         print("Fetching metadata from spotify servers")
-        edit_meta()
+        for file in os.listdir(Path):
+            filename = file.split(".")[:-1][0]
+            title, artist, artUrl = _get_title_(filename)
+            _add_metadata(f"{os.path.join(Path,file)}", title, artist)
+            albumart.getAlbumArt(os.path.join(Path, file), artUrl)
+
         print("Updated library")
     elif option == 99:
-        print('Exiting!')
+        print("Exiting!")
         sys.exit(0)
     else:
         print("Invalid option")
