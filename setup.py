@@ -1,6 +1,6 @@
 import subprocess
 import os
-
+from config import mpdArtpath
 
 def isConfig(path):
     for file in os.listdir(path):
@@ -18,9 +18,14 @@ if not isConfig(cwdpath):
     secret = input("Enter your spotify secret: ")
     url = input("Enter the redirect url of your spotify app: ")
 
-    if not os.path.exists(track_path) and not os.path.exists(os.path.join(cwdpath, 'art')):
+    if not (
+        os.path.exists(track_path) and not
+        os.path.exists(os.path.join(cwdpath, 'art')) and
+        os.path.exists(mpdArtpath)
+    ):
         os.mkdir(os.path.join(cwdpath, 'tracks'))
         os.mkdir(os.path.join(cwdpath, 'art'))
+        os.mkdir(mpdArtpath)
 
     with open("config.py", "w") as f:
         f.write(
