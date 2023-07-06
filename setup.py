@@ -21,7 +21,7 @@ if not isConfig(cwdpath):
 
     if not (
         os.path.exists(track_path) and not
-        os.path.exists(os.path.join(cwdpath, 'art')) and
+        os.path.exists(os.path.join(cwdpath, 'art'))
     ):
         os.mkdir(os.path.join(cwdpath, 'tracks'))
         os.mkdir(os.path.join(cwdpath, 'art'))
