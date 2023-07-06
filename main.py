@@ -8,10 +8,10 @@ from pydub import AudioSegment
 from src import albumart
 
 
-def _moveTomusic_():
+def _moveTomusic_(name=None):
     for file in os.listdir(TempPath):
-        srcpath = os.path.join(TempPath, file)
-        dstpath = os.path.join(Path, file)
+        srcpath = os.path.join(TempPath, name)
+        dstpath = os.path.join(Path, name)
         with open(srcpath, "rb") as f:
             audio = AudioSegment.from_file(f)
         audio.export(dstpath + ".mp3", format="mp3")
@@ -33,24 +33,25 @@ def event(option):
             print(str(index) + ".", result["title"])
 
         choice = int(input("Option: ")) - 1
-        title = results[choice]["title"]
         url = results[choice]["url"]
-        if check_aud_exists(title):
+        custom_name = input('Name the file: ')
+        if check_aud_exists(custom_name):
             print("Song already exists!")
             return
 
         print("Getting the song from the Youtube servers...")
-        download_song(url, title)
+        download_song(url, custom_name)
         print(f'{results[choice]["title"]} Successfully Downloaded')
         if os.listdir(TempPath):
             print(
                 "Performing audio coversion....This might take a few secs. Hold tight!"
             )
-            _moveTomusic_()
+            _moveTomusic_(custom_name)
             print("Audio conversion done!")
-            print("Getting it's metadata from spotify servers....")
-            spotitle, artist, url = _get_title_(title)
-            _add_metadata(os.path.join(Path, title + ".mp3"), spotitle, artist)
+            print("Getting it's metadata and albumart from spotify servers....")
+            spotitle, artist, url = _get_title_(custom_name)
+            albumart.getAlbumArt(os.path.join(Path, custom_name), url)
+            _add_metadata(os.path.join(Path, custom_name + ".mp3"), spotitle, artist)
             print("Song added to library")
     elif option == 2:
         print("Fetching metadata from spotify servers")
@@ -70,7 +71,7 @@ def event(option):
 
 def main():
     print("1) Download a track")
-    print("2) Generate metadata for tracks")
+    print("2) Generate metadata and albumart for tracks")
     print("99) Exit")
     while True:
         choice = int(input("Option > "))
