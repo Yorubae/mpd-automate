@@ -1,6 +1,7 @@
 Path = ""
-TempPath = ""
 clientId = ""
+TempPath = ""
 clientSecret = ""
 redirectUrl = ""
 albumArtpath = ""
+mpdArtpath = ""
